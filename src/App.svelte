@@ -1,23 +1,11 @@
 <script lang="ts">
   import logo from './assets/svelte.png'
   import Counter from './lib/Counter.svelte';
-  import { TodoList } from './entities/TodoList';
-  import { LoadInitialTodo } from './useCases/LoadInitialTodo';
-  import { LoadInitialTodo as LoadTodoGateway } from './gateway/LoadInitialTodo';
-  import { LoggerToConsole } from './gateway/LoggerToConsole';
-
-  const todoList = new TodoList();
-  const loadTodoGateway = new LoadTodoGateway();
-  const logger = new LoggerToConsole();
-  const loader = new LoadInitialTodo(loadTodoGateway, logger, todoList);
-
-  loader.execute()
-    .then((data) => {
-      console.log(data);
-    });
+  import List from './lib/List.svelte';
 </script>
 
 <main>
+  <List />
   <img src={logo} alt="Svelte Logo" />
   <h1>Hello Typescript!</h1>
 
