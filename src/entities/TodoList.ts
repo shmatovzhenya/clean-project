@@ -48,9 +48,9 @@ class TodoList {
       const { text, status } = item;
       const todo = { id, text, status };
 
-      if (!status) {
+      if (!filterableStatus) {
         result.push(todo);
-      } else if (status === filterableStatus) {
+      } else if (filterableStatus && status === filterableStatus) {
         result.push(todo);
       }
 
