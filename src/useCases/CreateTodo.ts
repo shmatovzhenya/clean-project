@@ -12,6 +12,9 @@ class CreateTodo implements UseCase<TodoText, void> {
 
       this._mutation
         .send(todo)
+        .then(() => {
+          resolve();
+        })
         .catch((error) => {
           this._todoList.removeById(todo.id);
           this._logger.error(error);

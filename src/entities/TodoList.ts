@@ -28,7 +28,7 @@ class TodoList {
       status: todo.status,
     };
 
-    this._order.push(todo.id);
+    this._order.unshift(todo.id);
   }
 
   getTodoById(id: TodoId): Todo {
