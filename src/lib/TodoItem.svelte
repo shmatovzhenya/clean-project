@@ -10,6 +10,7 @@
   let selected = status === 'Done' ? [id] : [];
 
   const onDestroy = () => {
+    actions.destroyTodo({ id });
     console.log('destroy');
   };
 
@@ -31,6 +32,7 @@
 <style>
   .root {
     display: flex;
+    align-items: center;
     width: 100%;
     border-bottom: 1px solid #ededed;
     font-size: 24px;

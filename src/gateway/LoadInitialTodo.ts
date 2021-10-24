@@ -10,9 +10,10 @@ type Item = {
 class LoadInitialTodo implements Query<void, Todo[]> {
   find(): Promise<Todo[]> {
     return new Promise((resolve) => {
-      const sourceData: Item[] = JSON.parse(localStorage.getItem('clean-todos')) as Item[];
+      type Items = Item[] | null;
+      const sourceData: Items = JSON.parse(localStorage.getItem('clean-todos')) as Items;
 
-      const result: Todo[] = sourceData.map((item): Todo => {
+      const result: Todo[] = (sourceData || []).map((item): Todo => {
         return {
           id: item.id.toString(),
           text: item.title,

@@ -9,15 +9,24 @@ type TodoItem = {
 class TodoList {
   private _collection: Record<TodoId, TodoItem> = {};
   private _order: TodoId[] = [];
+  private _lastId: number = 0;
 
   createNewTodo(text: TodoText): Todo {
-    const id: TodoId = (this._order.length + 1).toString();
+    this._lastId = Math.max(this._lastId, this._order.length);
+    this._lastId++;
+
+    const id: TodoId = (this._lastId).toString();
     const todo: Todo = {
       id, text,
       status: 'New',
     };
 
-    this.addExistedTodo(todo);
+    this._collection[todo.id] = {
+      text: todo.text,
+      status: todo.status,
+    };
+
+    this._order.unshift(todo.id);
 
     return todo;
   }
@@ -28,7 +37,7 @@ class TodoList {
       status: todo.status,
     };
 
-    this._order.unshift(todo.id);
+    this._order.push(todo.id);
   }
 
   getTodoById(id: TodoId): Todo {

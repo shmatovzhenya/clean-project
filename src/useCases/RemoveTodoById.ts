@@ -17,6 +17,7 @@ class RemoveTodoById implements UseCase<TodoId, void> {
         .then(() => {
           this._todoList
             .removeById(id);
+          resolve();
         })
         .catch(error => {
           this._logger.error(error);

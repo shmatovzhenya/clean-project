@@ -9,6 +9,8 @@ import { UpdateTodoStatus } from '../useCases/UpdateTodoStatus';
 import { UpdateStatus } from '../gateway/UpdateStatus';
 import { CreateTodo } from '../useCases/CreateTodo';
 import { CreateTodo as CreateTodoGateway } from '../gateway/CreateTodo';
+import { RemoveTodoById } from '../useCases/RemoveTodoById';
+import { RemoveTodo } from '../gateway/RemoveTodo';
 
 const todos = writable([]);
 const todoList = new TodoList();
@@ -22,6 +24,9 @@ const updateStatus = new UpdateTodoStatus(updateStatusGateway, logger, todoList)
 
 const createTodoGateway = new CreateTodoGateway();
 const createTodo = new CreateTodo(createTodoGateway, logger, todoList);
+
+const removeTodoGateway = new RemoveTodo();
+const removeTodo = new RemoveTodoById(removeTodoGateway, logger, todoList);
 
 loader.execute()
   .then((data) => {
@@ -44,6 +49,16 @@ const actions = {
     return new Promise((resolve) => {
       createTodo
         .execute(text)
+        .then(() => {
+          todos.set(todoList.getByStatus());
+          resolve();
+        });
+    });
+  },
+  destroyTodo({ id }: { id: TodoId }): Promise<void> {
+    return new Promise((resolve) => {
+      removeTodo
+        .execute(id)
         .then(() => {
           todos.set(todoList.getByStatus());
           resolve();

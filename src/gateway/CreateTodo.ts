@@ -10,7 +10,8 @@ type Item = {
 class CreateTodo implements Mutation<Todo, void> {
   send(options: Todo): Promise<void> {
     return new Promise((resolve) => {
-      const data: Item[] = JSON.parse(localStorage.getItem('clean-todos')) as Item[];
+      type Items = Item[] | null;
+      const data: Items = JSON.parse(localStorage.getItem('clean-todos')) as Items || [];
 
       data.unshift({
         id: parseInt(options.id),
